@@ -98,7 +98,7 @@
     .nav-logo span { color: var(--cyan); }
     .nav-links {
       display: flex;
-      gap: 28px;
+      gap: 22px;
       list-style: none;
       position: absolute;
       left: 50%;
@@ -108,7 +108,7 @@
       color: var(--text);
       text-decoration: none;
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 1px;
       text-transform: uppercase;
       transition: color 0.3s;
@@ -428,6 +428,67 @@
       width: 0%;
       transition: width 1.2s ease;
     }
+
+    /* ===== CERTIFICATIONS ===== */
+    #certs-wrap { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+    .certs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .cert-card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 24px 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: all 0.3s;
+    }
+    .cert-card:hover {
+      border-color: rgba(255,0,60,0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .cert-status {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+    .cert-status.completed {
+      background: rgba(0,229,255,0.1);
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.3);
+    }
+    .cert-status.progress {
+      background: rgba(255,0,60,0.1);
+      color: var(--red-main);
+      border: 1px solid rgba(255,0,60,0.3);
+    }
+    .cert-info h3 {
+      font-family: var(--display);
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .cert-info p {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .cert-issuer {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--red-main);
+      letter-spacing: 1px;
+    }
+
     #projects-wrap { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
     .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .project-card {
@@ -760,6 +821,7 @@
     .t-prompt-line { display: flex; align-items: center; gap: 8px; }
     @media (max-width: 900px) {
       .blog-grid { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
     }
     @media (max-width: 768px) {
@@ -769,7 +831,7 @@
       #about { grid-template-columns: 1fr; gap: 40px; }
       .skills-grid { grid-template-columns: 1fr; }
       .projects-grid { grid-template-columns: 1fr; }
-      section, #about-wrap, #skills-wrap, #projects-wrap, #blog-wrap { padding: 70px 24px; }
+      section, #about-wrap, #skills-wrap, #certs-wrap, #projects-wrap, #blog-wrap { padding: 70px 24px; }
     }
   </style>
 </head>
@@ -806,6 +868,7 @@
     <li><a href="#hero">Home</a></li>
     <li><a href="#about-wrap">About</a></li>
     <li><a href="#skills-wrap">Skills</a></li>
+    <li><a href="#certs-wrap">Certs</a></li>
     <li><a href="#projects-wrap">Projects</a></li>
     <li><a href="#writeups-wrap">Writeups</a></li>
     <li><a href="#blog-wrap">Blog</a></li>
@@ -910,9 +973,100 @@
   </div>
 </div>
 
-<div id="projects-wrap">
+<!-- ===== CERTIFICATIONS SECTION ===== -->
+<div id="certs-wrap">
   <div class="section-header reveal">
     <span class="section-num">03</span>
+    <h2 class="section-title">CERTIFICATIONS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-card reveal reveal-delay-1">
+      <div>
+        <span class="cert-status completed">COMPLETED</span>
+      </div>
+      <div class="cert-info">
+        <h3>Google Cybersecurity Professional Certificate</h3>
+        <p>Security fundamentals, networks, Linux, SQL and incident detection.</p>
+        <div class="cert-issuer">Google</div>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div>
+        <span class="cert-status completed">COMPLETED</span>
+      </div>
+      <div class="cert-info">
+        <h3>Cisco Introduction to Cyber Security</h3>
+        <p>Foundational course on cybersecurity concepts and common threats.</p>
+        <div class="cert-issuer">Cisco</div>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div>
+        <span class="cert-status completed">COMPLETED</span>
+      </div>
+      <div class="cert-info">
+        <h3>Cisco Ethical Hacker</h3>
+        <p>Introduces ethical hacking methodology and penetration-testing concepts.</p>
+        <div class="cert-issuer">Cisco</div>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div>
+        <span class="cert-status completed">COMPLETED</span>
+      </div>
+      <div class="cert-info">
+        <h3>Cisco Help Desk Technician</h3>
+        <p>IT support fundamentals, troubleshooting and customer-facing technical skills.</p>
+        <div class="cert-issuer">Cisco</div>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div>
+        <span class="cert-status completed">COMPLETED</span>
+      </div>
+      <div class="cert-info">
+        <h3>IBM Ethical Hacking with Open Source Tools</h3>
+        <p>Professional Certificate — 6 courses completed on open-source offensive tools.</p>
+        <div class="cert-issuer">IBM</div>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div>
+        <span class="cert-status progress">IN PROGRESS</span>
+      </div>
+      <div class="cert-info">
+        <h3>Python Essentials 1</h3>
+        <p>Python programming fundamentals — syntax, data types and control flow.</p>
+        <div class="cert-issuer">Python Institute</div>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div>
+        <span class="cert-status progress">IN PROGRESS</span>
+      </div>
+      <div class="cert-info">
+        <h3>Hack The Box Academy</h3>
+        <p>Structured offensive-security courses and hands-on labs.</p>
+        <div class="cert-issuer">Hack The Box</div>
+      </div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div>
+        <span class="cert-status progress">IN PROGRESS</span>
+      </div>
+      <div class="cert-info">
+        <h3>Hack The Box — SOC Level 1</h3>
+        <p>Currently studying defensive + offensive security concepts.</p>
+        <div class="cert-issuer">Hack The Box</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="projects-wrap">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
     <h2 class="section-title">PROJECTS</h2>
     <div class="section-line"></div>
   </div>
@@ -941,7 +1095,7 @@
 <!-- CTF WRITEUPS -->
 <div id="writeups-wrap">
   <div class="section-header reveal">
-    <span class="section-num">04</span>
+    <span class="section-num">05</span>
     <h2 class="section-title">CTF WRITEUPS</h2>
     <div class="section-line"></div>
   </div>
@@ -970,7 +1124,7 @@
 <!-- BLOG -->
 <div id="blog-wrap">
   <div class="section-header reveal">
-    <span class="section-num">05</span>
+    <span class="section-num">06</span>
     <h2 class="section-title">BLOG</h2>
     <div class="section-line"></div>
   </div>
@@ -1162,8 +1316,8 @@
       {t:'green', v:'Available commands:'},
       {t:'cyan',  v:'  whoami      — identity & goals'},
       {t:'cyan',  v:'  skills      — technical stack'},
-      {t:'cyan',  v:'  projects    — current work'},
       {t:'cyan',  v:'  certs       — certifications'},
+      {t:'cyan',  v:'  projects    — current work'},
       {t:'cyan',  v:'  clear       — wipe terminal'},
     ],
     whoami: () => [
@@ -1179,11 +1333,6 @@
       {t:'',      v:'  Burp • Nmap • Metasploit'},
       {t:'',      v:'  BloodHound • Wireshark • Docker'},
     ],
-    projects: () => [
-      {t:'green', v:'[01] UBI.SEC Vulnerability Scanner'},
-      {t:'',      v:'     Modular Python web scanner'},
-      {t:'cyan',  v:'     → github.com/ubi-sec'},
-    ],
     certs: () => [
       {t:'green', v:'[COMPLETED]'},
       {t:'',      v:'  Google Cybersecurity Professional'},
@@ -1193,6 +1342,11 @@
       {t:'cyan',  v:'[IN PROGRESS]'},
       {t:'',      v:'  Python Essentials 1'},
       {t:'',      v:'  HTB Academy + SOC Level 1'},
+    ],
+    projects: () => [
+      {t:'green', v:'[01] UBI.SEC Vulnerability Scanner'},
+      {t:'',      v:'     Modular Python web scanner'},
+      {t:'cyan',  v:'     → github.com/ubi-sec'},
     ],
     clear: () => '__clear__',
   };
