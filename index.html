@@ -3,924 +3,645 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🔴 Abaidullah (UBI.SEC) | Advanced Red Team Student</title>
-  <meta name="description" content="Abaidullah (UBI.SEC) — Advanced Red Team Student from Faisalabad, Pakistan. Building offensive security tools, competing in CTFs & hackathons, targeting eJPT.">
+  <title>UBI.SEC | Abaidullah — Advanced Red Team Student</title>
+  <meta name="description" content="Abaidullah (UBI.SEC) — Advanced Red Team Student from Faisalabad. Building offensive tools, CTFs, eJPT track.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --red-main: #ff003c;
-      --cyan: #00e5ff;
-      --red-accent: #ff003c;
-      --dark: #050000;
-      --darker: #020000;
-      --panel: rgba(255, 0, 60, 0.04);
-      --border: rgba(255, 0, 60, 0.2);
-      --text: #c4b0b0;
-      --mono: 'Share Tech Mono', monospace;
-      --display: 'Orbitron', sans-serif;
-      --body: 'Rajdhani', sans-serif;
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --card: #141414;
+      --border: #2a2a2a;
+      --red: #ff2d2d;
+      --red-dim: rgba(255,45,45,0.15);
+      --text: #e5e5e5;
+      --muted: #888;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', system-ui, sans-serif;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
     body {
-      background: var(--dark);
+      background: var(--bg);
       color: var(--text);
-      font-family: var(--body);
-      font-size: 16px;
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
       overflow-x: hidden;
-      cursor: none;
     }
-    #cursor {
-      position: fixed;
-      width: 12px; height: 12px;
-      background: var(--red-main);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease;
-      box-shadow: 0 0 10px var(--red-main), 0 0 30px rgba(255,0,60,0.4);
-    }
-    #cursor-trail {
-      position: fixed;
-      width: 28px; height: 28px;
-      border: 1px solid rgba(255,0,60,0.5);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: all 0.15s ease;
-    }
-    #matrix-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      opacity: 0.07;
-    }
-    body::after {
+    /* Grid background */
+    body::before {
       content: '';
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.08) 2px,
-        rgba(0,0,0,0.08) 4px
-      );
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,45,45,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,45,45,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
     }
+    /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
+      position: fixed; top:0; left:0; right:0;
       z-index: 100;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 18px 40px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(5,0,0,0.92);
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(10,10,10,0.9);
       backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: var(--display);
-      font-weight: 900;
-      font-size: 1.2rem;
-      color: var(--red-main);
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #fff;
       text-decoration: none;
-      letter-spacing: 3px;
-      text-shadow: 0 0 20px var(--red-main);
+      letter-spacing: -0.5px;
     }
-    .nav-logo span { color: var(--cyan); }
+    .nav-logo span { color: var(--red); }
     .nav-links {
       display: flex;
-      gap: 22px;
+      gap: 28px;
       list-style: none;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
     }
     .nav-links a {
-      color: var(--text);
+      color: var(--muted);
       text-decoration: none;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 1px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
-      transition: color 0.3s;
-      position: relative;
+      transition: color 0.2s;
     }
-    .nav-links a::before { content: '> '; color: var(--red-main); opacity: 0; transition: opacity 0.3s; }
-    .nav-links a:hover { color: var(--red-main); }
-    .nav-links a:hover::before { opacity: 1; }
-    .nav-status {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--red-main);
+    .nav-links a:hover { color: #fff; }
+    .nav-right {
       display: flex;
+      gap: 12px;
       align-items: center;
-      gap: 8px;
-    }
-    .status-dot {
-      width: 8px; height: 8px;
-      background: var(--red-main);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--red-main); }
-      50% { opacity: 0.4; box-shadow: none; }
-    }
-    main { position: relative; z-index: 2; }
-    section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 80px;
-      max-width: 100%;
-      padding-left: 8vw;
-      padding-right: 8vw;
-    }
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--red-main);
-      letter-spacing: 4px;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease 0.3s forwards;
-    }
-    .hero-title {
-      font-family: var(--display);
-      font-size: clamp(2.8rem, 7vw, 5.8rem);
-      font-weight: 900;
-      line-height: 1.05;
-      color: #fff;
-      margin-bottom: 8px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.5s forwards;
-    }
-    .hero-title .accent { color: var(--red-main); text-shadow: 0 0 30px var(--red-main); }
-    .hero-title .glitch {
-      position: relative;
-      display: inline-block;
-    }
-    .hero-title .glitch::before,
-    .hero-title .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      background: var(--dark);
-    }
-    .hero-title .glitch::before {
-      color: var(--cyan);
-      animation: glitch1 4s infinite;
-      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-    }
-    .hero-title .glitch::after {
-      color: var(--red-accent);
-      animation: glitch2 4s infinite;
-      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-    }
-    @keyframes glitch1 {
-      0%, 95%, 100% { transform: translate(0); opacity: 0; }
-      96% { transform: translate(-3px, 1px); opacity: 0.8; }
-      97% { transform: translate(3px, -1px); opacity: 0.8; }
-      98% { transform: translate(-2px, 2px); opacity: 0.8; }
-      99% { transform: translate(0); opacity: 0; }
-    }
-    @keyframes glitch2 {
-      0%, 95%, 100% { transform: translate(0); opacity: 0; }
-      96% { transform: translate(3px, -1px); opacity: 0.7; }
-      97% { transform: translate(-3px, 1px); opacity: 0.7; }
-      98% { transform: translate(2px, -2px); opacity: 0.7; }
-      99% { transform: translate(0); opacity: 0; }
-    }
-    .hero-sub {
-      font-family: var(--mono);
-      font-size: 1rem;
-      color: var(--cyan);
-      margin-bottom: 30px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.7s forwards;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .hero-sub span { color: var(--text); }
-    .typed-text { color: var(--red-main); min-width: 180px; }
-    .typed-cursor {
-      display: inline-block;
-      width: 2px; height: 1em;
-      background: var(--red-main);
-      margin-left: 2px;
-      vertical-align: middle;
-      animation: blink 0.8s step-end infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    .hero-desc {
-      font-size: 1.15rem;
-      color: var(--text);
-      max-width: 580px;
-      line-height: 1.7;
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.9s forwards;
-    }
-    .hero-btns {
-      display: flex; gap: 16px; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 1.1s forwards;
     }
     .btn {
       font-family: var(--mono);
       font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 14px 28px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 4px;
       text-decoration: none;
-      border: 1px solid;
-      transition: all 0.3s ease;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #ff4444; box-shadow: 0 0 20px rgba(255,45,45,0.4); }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--red); color: var(--red); }
+
+    /* HERO */
+    #hero {
       position: relative;
-      overflow: hidden;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 40px 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+      gap: 60px;
     }
-    .btn-primary { color: var(--red-main); border-color: var(--red-main); }
-    .btn-primary:hover { box-shadow: 0 0 20px rgba(255,0,60,0.4); color: var(--dark); background: var(--red-main); }
-    .btn-secondary { color: var(--cyan); border-color: var(--cyan); }
-    .btn-secondary:hover { box-shadow: 0 0 20px rgba(0,229,255,0.3); }
-    .hero-terminal {
-      position: absolute;
-      right: 8vw;
-      bottom: 15vh;
+    .hero-left { flex: 1; }
+    .hero-tag {
       font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -1.5px;
+    }
+    .hero-title .red { color: var(--red); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-right {
+      width: 340px;
+      flex-shrink: 0;
+    }
+    .terminal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      position: relative;
+    }
+    .terminal-box::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px;
+      width: 12px; height: 12px;
+      border-top: 2px solid var(--red);
+      border-left: 2px solid var(--red);
+    }
+    .terminal-box::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; right: -1px;
+      width: 12px; height: 12px;
+      border-bottom: 2px solid var(--red);
+      border-right: 2px solid var(--red);
+    }
+    .term-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      color: var(--muted);
       font-size: 0.7rem;
-      color: rgba(255,0,60,0.5);
-      line-height: 1.9;
-      text-align: right;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 1.4s forwards;
     }
-    .hero-terminal .t-line { animation: typeIn 0.4s ease both; }
-    .hero-terminal .t-line:nth-child(1) { animation-delay: 1.5s; }
-    .hero-terminal .t-line:nth-child(2) { animation-delay: 1.8s; }
-    .hero-terminal .t-line:nth-child(3) { animation-delay: 2.1s; }
-    .hero-terminal .t-line:nth-child(4) { animation-delay: 2.4s; }
-    @keyframes typeIn {
-      from { opacity: 0; transform: translateX(10px); }
-      to { opacity: 1; transform: translateX(0); }
+    .term-live {
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .term-live::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; }
+      50% { opacity:0.3; }
+    }
+    .term-line { margin-bottom: 6px; color: var(--muted); }
+    .term-line .cmd { color: var(--red); }
+    .term-line .ok { color: #4ade80; }
+
+    /* SECTIONS */
+    section, .section {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 40px;
     }
     .section-header {
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-bottom: 60px;
+      margin-bottom: 40px;
     }
     .section-num {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--red-main);
-      letter-spacing: 3px;
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 1px;
     }
     .section-title {
-      font-family: var(--display);
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: #fff;
-      letter-spacing: 2px;
     }
     .section-line {
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, var(--border), transparent);
+      background: var(--border);
     }
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    #about-wrap { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
-    #about {
+
+    /* ABOUT */
+    .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
     }
     .about-text p {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: var(--text);
-      margin-bottom: 20px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-size: 1rem;
     }
-    .about-text p strong { color: var(--red-main); font-family: var(--mono); font-size: 0.9rem; }
-    blockquote {
-      border-left: 2px solid var(--red-main);
-      padding-left: 20px;
-      margin: 30px 0;
+    .about-text strong { color: var(--red); }
+    .about-text blockquote {
+      border-left: 3px solid var(--red);
+      padding-left: 16px;
+      margin: 24px 0;
+      color: var(--red);
       font-family: var(--mono);
       font-size: 0.85rem;
-      color: var(--red-main);
-      font-style: italic;
     }
     .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 12px;
     }
     .stat-card {
+      background: var(--card);
       border: 1px solid var(--border);
-      padding: 24px 20px;
-      background: var(--panel);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
+      border-radius: 6px;
+      padding: 20px;
+      transition: border-color 0.2s;
     }
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, var(--red-main), transparent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .stat-card:hover { border-color: var(--red-main); transform: translateY(-3px); }
-    .stat-card:hover::before { transform: scaleX(1); }
+    .stat-card:hover { border-color: var(--red); }
     .stat-num {
-      font-family: var(--display);
-      font-size: 1.7rem;
-      font-weight: 900;
-      color: var(--red-main);
-      text-shadow: 0 0 20px rgba(255,0,60,0.5);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 4px;
     }
     .stat-label {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--text);
-      letter-spacing: 2px;
-      margin-top: 4px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 1px;
     }
-    #skills-wrap { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
-    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .skill-category {
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .skill-box {
+      background: var(--card);
       border: 1px solid var(--border);
-      padding: 28px;
-      background: var(--panel);
-      transition: border-color 0.3s, box-shadow 0.3s;
+      border-radius: 6px;
+      padding: 24px;
     }
-    .skill-category:hover {
-      border-color: rgba(255,0,60,0.5);
-      box-shadow: 0 0 30px rgba(255,0,60,0.05);
-    }
-    .skill-cat-title {
+    .skill-box h3 {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      color: var(--red-main);
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 1px;
       margin-bottom: 16px;
       text-transform: uppercase;
     }
     .skill-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: var(--text);
     }
     .skill-item::before {
       content: '▸';
-      color: var(--red-main);
-      font-size: 0.7rem;
-    }
-    .skill-item span {
-      font-family: var(--mono);
+      color: var(--red);
       font-size: 0.75rem;
-      color: var(--text);
-    }
-    .skill-bar-wrap {
-      flex: 1;
-      height: 3px;
-      background: rgba(255,0,60,0.1);
-      margin-left: auto;
-      width: 60px;
-    }
-    .skill-bar {
-      height: 100%;
-      background: var(--red-main);
-      width: 0%;
-      transition: width 1.2s ease;
     }
 
-    /* ===== CERTIFICATIONS ===== */
-    #certs-wrap { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+    /* CERTS */
     .certs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 16px;
     }
     .cert-card {
+      background: var(--card);
       border: 1px solid var(--border);
-      background: var(--panel);
-      padding: 24px 28px;
+      border-radius: 6px;
+      padding: 22px 24px;
       display: flex;
-      gap: 20px;
+      gap: 16px;
       align-items: flex-start;
-      transition: all 0.3s;
+      transition: border-color 0.2s;
     }
-    .cert-card:hover {
-      border-color: rgba(255,0,60,0.5);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    .cert-status {
+    .cert-card:hover { border-color: var(--red); }
+    .cert-badge {
       font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 1px;
+      font-size: 0.65rem;
       padding: 4px 10px;
-      border-radius: 2px;
+      border-radius: 3px;
       white-space: nowrap;
-      margin-top: 4px;
+      margin-top: 3px;
     }
-    .cert-status.completed {
-      background: rgba(0,229,255,0.1);
-      color: var(--cyan);
-      border: 1px solid rgba(0,229,255,0.3);
+    .cert-badge.done {
+      background: rgba(74,222,128,0.1);
+      color: #4ade80;
+      border: 1px solid rgba(74,222,128,0.3);
     }
-    .cert-status.progress {
-      background: rgba(255,0,60,0.1);
-      color: var(--red-main);
-      border: 1px solid rgba(255,0,60,0.3);
+    .cert-badge.prog {
+      background: var(--red-dim);
+      color: var(--red);
+      border: 1px solid rgba(255,45,45,0.3);
     }
     .cert-info h3 {
-      font-family: var(--display);
       font-size: 0.95rem;
+      font-weight: 600;
       color: #fff;
       margin-bottom: 6px;
-      letter-spacing: 0.5px;
     }
     .cert-info p {
       font-size: 0.85rem;
-      color: var(--text);
-      line-height: 1.5;
-      margin-bottom: 8px;
+      color: var(--muted);
+      margin-bottom: 6px;
     }
     .cert-issuer {
       font-family: var(--mono);
       font-size: 0.7rem;
-      color: var(--red-main);
-      letter-spacing: 1px;
+      color: var(--red);
     }
 
-    #projects-wrap { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
-    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .project-card {
-      border: 1px solid var(--border);
-      padding: 36px 32px;
-      background: var(--panel);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      text-decoration: none;
-      display: block;
-      color: inherit;
+    /* PROJECTS / CARDS */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
     }
-    .project-card::after {
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      position: relative;
+      transition: all 0.25s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .tool-card::before {
       content: '';
       position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 1px;
-      background: linear-gradient(90deg, var(--red-main), var(--cyan));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
+      top: 8px; left: 8px;
+      width: 10px; height: 10px;
+      border-top: 2px solid var(--red);
+      border-left: 2px solid var(--red);
+      opacity: 0.6;
     }
-    .project-card:hover {
-      border-color: rgba(255,0,60,0.5);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    .tool-card::after {
+      content: '';
+      position: absolute;
+      bottom: 8px; right: 8px;
+      width: 10px; height: 10px;
+      border-bottom: 2px solid var(--red);
+      border-right: 2px solid var(--red);
+      opacity: 0.6;
     }
-    .project-card:hover::after { transform: scaleX(1); }
-    .project-tag {
+    .tool-card:hover {
+      border-color: var(--red);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .tool-tag {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      color: var(--red-main);
-      margin-bottom: 16px;
-      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--red);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
     }
-    .project-name {
-      font-family: var(--display);
+    .tool-name {
       font-size: 1.1rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
+      margin-bottom: 10px;
     }
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--text);
-      line-height: 1.65;
-      margin-bottom: 24px;
+    .tool-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.55;
     }
-    .project-footer {
+    .tool-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    .project-link {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--cyan);
-      letter-spacing: 1px;
-      transition: color 0.3s;
+      font-size: 0.75rem;
     }
-    .project-card:hover .project-link { color: var(--red-main); }
-    .project-arrow {
-      width: 32px; height: 32px;
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--red-main);
-      font-size: 0.8rem;
-      transition: all 0.3s;
-    }
-    .project-card:hover .project-arrow {
-      background: var(--red-main);
-      color: var(--dark);
-      border-color: var(--red-main);
-    }
-    /* Writeups */
-    .writeups-list { display: flex; flex-direction: column; gap: 2px; }
+    .tool-link { color: var(--red); }
+    .tool-path { color: var(--muted); }
+
+    /* WRITEUPS */
+    .writeup-list { display: flex; flex-direction: column; gap: 2px; }
     .writeup-item {
       display: flex;
       align-items: center;
-      padding: 20px 24px;
+      padding: 18px 20px;
+      background: var(--card);
       border: 1px solid transparent;
-      background: rgba(255,0,60,0.02);
-      transition: all 0.3s;
+      border-radius: 4px;
       text-decoration: none;
       color: inherit;
-      position: relative;
-      overflow: hidden;
-    }
-    .writeup-item::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0;
-      width: 2px; height: 100%;
-      background: var(--red-main);
-      transform: scaleY(0);
-      transition: transform 0.3s;
+      transition: all 0.2s;
     }
     .writeup-item:hover {
-      background: rgba(255,0,60,0.05);
       border-color: var(--border);
-      padding-left: 32px;
+      background: #1a1a1a;
+      padding-left: 28px;
     }
-    .writeup-item:hover::before { transform: scaleY(1); }
     .writeup-platform {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      color: var(--red-main);
-      width: 120px;
+      font-size: 0.7rem;
+      color: var(--red);
+      width: 110px;
       text-transform: uppercase;
     }
-    .writeup-title {
-      flex: 1;
-      font-size: 0.95rem;
-      color: #e0e0e0;
-      font-family: var(--mono);
-    }
+    .writeup-title { flex:1; font-size: 0.95rem; color: #ddd; }
     .writeup-cat {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--cyan);
-      letter-spacing: 1px;
-      margin-right: 30px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-right: 24px;
     }
     .writeup-date {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      color: rgba(255,0,60,0.4);
+      font-size: 0.7rem;
+      color: #555;
     }
-    /* Blog */
-    #blog-wrap { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+
+    /* BLOG */
     .blog-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
     .blog-card {
+      background: var(--card);
       border: 1px solid var(--border);
-      background: var(--panel);
-      padding: 28px 24px;
-      transition: all 0.3s;
+      border-radius: 6px;
+      padding: 24px;
       text-decoration: none;
       color: inherit;
-      display: block;
+      transition: all 0.2s;
     }
     .blog-card:hover {
-      border-color: rgba(255,0,60,0.5);
-      transform: translateY(-4px);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border-color: var(--red);
+      transform: translateY(-3px);
     }
     .blog-date {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--red-main);
-      letter-spacing: 2px;
-      margin-bottom: 12px;
+      font-size: 0.7rem;
+      color: var(--red);
+      margin-bottom: 10px;
     }
     .blog-title {
-      font-family: var(--display);
-      font-size: 1rem;
+      font-size: 1.05rem;
+      font-weight: 600;
       color: #fff;
-      margin-bottom: 12px;
-      line-height: 1.4;
+      margin-bottom: 10px;
+      line-height: 1.35;
     }
     .blog-excerpt {
       font-size: 0.85rem;
-      color: var(--text);
-      line-height: 1.6;
-      margin-bottom: 18px;
+      color: var(--muted);
+      margin-bottom: 14px;
     }
     .blog-read {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--cyan);
-      letter-spacing: 1px;
+      font-size: 0.75rem;
+      color: var(--red);
     }
+
+    /* FOOTER */
     footer {
-      position: relative; z-index: 2;
+      position: relative;
+      z-index: 1;
       border-top: 1px solid var(--border);
-      padding: 60px 40px;
+      padding: 50px 40px;
       text-align: center;
-      background: var(--darker);
+      background: var(--bg2);
     }
     .footer-logo {
-      font-family: var(--display);
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--red-main);
-      text-shadow: 0 0 30px var(--red-main);
-      margin-bottom: 20px;
-      letter-spacing: 6px;
-    }
-    .footer-desc {
       font-family: var(--mono);
-      font-size: 0.75rem;
-      color: rgba(255,0,60,0.5);
-      margin-bottom: 24px;
-      letter-spacing: 2px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .footer-logo span { color: var(--red); }
+    .footer-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 20px;
     }
     .footer-social {
       display: flex;
       justify-content: center;
-      gap: 16px;
-      margin-bottom: 28px;
+      gap: 12px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
     .social-pill {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--cyan);
+      font-size: 0.75rem;
+      color: var(--muted);
       border: 1px solid var(--border);
-      padding: 8px 18px;
+      padding: 8px 16px;
+      border-radius: 4px;
       text-decoration: none;
-      transition: all 0.3s;
-      letter-spacing: 1px;
+      transition: all 0.2s;
     }
     .social-pill:hover {
-      border-color: var(--red-main);
-      color: var(--red-main);
-      background: rgba(255,0,60,0.05);
+      border-color: var(--red);
+      color: var(--red);
     }
     .footer-copy {
+      font-size: 0.75rem;
+      color: #555;
       font-family: var(--mono);
-      font-size: 0.65rem;
-      color: rgba(255,0,60,0.25);
-      letter-spacing: 2px;
     }
-    .scroll-line {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--red-main), var(--cyan));
-      z-index: 200;
-      transition: width 0.1s;
-      box-shadow: 0 0 10px var(--red-main);
-    }
-    #boot-screen {
-      position: fixed; inset: 0;
-      background: #000;
-      z-index: 9000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 60px 8vw;
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      color: var(--red-main);
-      transition: opacity 0.7s ease;
-    }
-    #boot-screen.hide { opacity: 0; pointer-events: none; }
-    .boot-line {
-      opacity: 0; transform: translateY(4px);
-      transition: opacity 0.2s, transform 0.2s;
-      line-height: 2.1;
-    }
-    .boot-line.show { opacity: 1; transform: none; }
-    .boot-line.dim { color: rgba(255,0,60,0.3); }
-    .boot-line.cyan { color: var(--cyan); }
-    .boot-line.white { color: #fff; font-weight: bold; letter-spacing: 3px; font-size: 1.1rem; }
-    .boot-bar-wrap { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
-    .boot-bar { width: 220px; height: 3px; background: rgba(255,0,60,0.12); overflow: hidden; }
-    .boot-bar-fill { height: 100%; background: var(--red-main); width: 0%; transition: width 1s ease; box-shadow: 0 0 8px var(--red-main); }
-    #float-term-btn {
-      position: fixed; bottom: 28px; right: 28px;
-      z-index: 500;
-      width: 50px; height: 50px;
-      background: rgba(2,0,0,0.95);
-      border: 1px solid var(--red-main);
-      color: var(--red-main);
-      font-family: var(--mono);
-      font-size: 1.1rem;
-      cursor: none;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.3s;
-      box-shadow: 0 0 18px rgba(255,0,60,0.25);
-    }
-    #float-term-btn:hover { background: var(--red-main); color: var(--dark); box-shadow: 0 0 36px rgba(255,0,60,0.5); transform: scale(1.1); }
-    .ft-tooltip {
-      position: absolute; right: 58px;
-      background: rgba(2,0,0,0.97); border: 1px solid var(--red-main);
-      padding: 6px 14px; font-family: var(--mono); font-size: 0.62rem;
-      letter-spacing: 2px; white-space: nowrap; color: var(--red-main);
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.15s ease 0s, visibility 0s linear 0.15s;
-    }
-    #float-term-btn:hover .ft-tooltip {
-      opacity: 1; visibility: visible;
-      transition: opacity 0.2s ease 0.5s, visibility 0s linear 0.5s;
-    }
-    #float-terminal {
-      position: fixed; bottom: 90px; right: 28px;
-      z-index: 499;
-      width: 500px; max-width: calc(100vw - 40px);
-      border: 1px solid var(--red-main);
-      background: rgba(2,0,0,0.97);
-      box-shadow: 0 0 50px rgba(255,0,60,0.18);
-      transform: translateY(16px) scale(0.97);
-      opacity: 0; pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.34,1.4,0.64,1);
-      backdrop-filter: blur(14px);
-    }
-    #float-terminal.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
-    .ft-titlebar {
-      display: flex; align-items: center; gap: 7px;
-      padding: 9px 14px; border-bottom: 1px solid var(--border);
-      background: rgba(255,0,60,0.02); user-select: none;
-    }
-    .ft-dot { width: 9px; height: 9px; border-radius: 50%; }
-    .ft-dot.r { background: #ff5f57; } .ft-dot.y { background: #febc2e; } .ft-dot.g { background: #28c840; }
-    .ft-title { font-family: var(--mono); font-size: 0.6rem; color: rgba(255,0,60,0.35); letter-spacing: 2px; flex: 1; margin-left: 6px; }
-    .ft-close { background: none; border: none; color: rgba(255,0,60,0.35); font-family: var(--mono); font-size: 0.8rem; cursor: none; padding: 0 4px; transition: color 0.2s; }
-    .ft-close:hover { color: var(--red-accent); }
-    #ft-body {
-      padding: 14px 16px; height: 260px; overflow-y: auto;
-      font-family: var(--mono); font-size: 0.75rem; line-height: 1.85;
-    }
-    .t-output.green { color: var(--red-main); }
-    .t-output.cyan { color: var(--cyan); }
-    .t-output.red { color: var(--red-accent); }
-    .t-output.dim { color: rgba(255,0,60,0.3); }
-    .t-prompt { color: var(--red-main); white-space: nowrap; font-size: 0.75rem; }
-    .t-input {
-      background: transparent; border: none; outline: none;
-      color: var(--red-main); font-family: var(--mono); font-size: 0.75rem;
-      flex: 1; caret-color: var(--red-main);
-    }
-    .t-prompt-line { display: flex; align-items: center; gap: 8px; }
+
+    /* RESPONSIVE */
     @media (max-width: 900px) {
-      .blog-grid { grid-template-columns: 1fr; }
-      .certs-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
-    }
-    @media (max-width: 768px) {
+      #hero { flex-direction: column; padding-top: 100px; }
+      .hero-right { width: 100%; max-width: 400px; }
+      .about-grid, .skills-grid, .certs-grid, .blog-grid {
+        grid-template-columns: 1fr;
+      }
+      section, .section, #hero { padding-left: 20px; padding-right: 20px; }
       nav { padding: 14px 20px; }
-      #hero { padding-left: 24px; padding-right: 24px; }
-      .hero-terminal { display: none; }
-      #about { grid-template-columns: 1fr; gap: 40px; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      section, #about-wrap, #skills-wrap, #certs-wrap, #projects-wrap, #blog-wrap { padding: 70px 24px; }
     }
   </style>
 </head>
 <body>
-<div id="boot-screen">
-  <div class="boot-line white" id="b0">UBI.SEC OS v2.0 // RED TEAM EDITION</div>
-  <div class="boot-line dim" id="b1">Copyright (c) 2026 Abaidullah. Authorized use only.</div>
-  <br>
-  <div class="boot-line" id="b2">[  OK  ] Initializing offensive core...</div>
-  <div class="boot-line" id="b3">[  OK  ] Loading reconnaissance modules...</div>
-  <div class="boot-line" id="b4">[  OK  ] Mounting lab environments...</div>
-  <div class="boot-line" id="b5">[  OK  ] Loading tools (nmap • burp • metasploit • bloodhound)...</div>
-  <div class="boot-line" id="b6">[  OK  ] Starting UBI.SEC scanner framework...</div>
-  <div class="boot-line cyan" id="b7">[  OK  ] Portfolio interface ready</div>
-  <br>
-  <div class="boot-line" id="b8">
-    <div class="boot-bar-wrap">
-      <span>LOADING</span>
-      <div class="boot-bar"><div class="boot-bar-fill" id="boot-fill"></div></div>
-      <span id="boot-pct">0%</span>
-    </div>
-  </div>
-  <div class="boot-line green" id="b9">System ready. Welcome, Abaidullah.</div>
-</div>
 
-<div class="scroll-line" id="scroll-line"></div>
-<div id="cursor" style="left: -100px; top: -100px;"></div>
-<div id="cursor-trail" style="left: -100px; top: -100px;"></div>
-<canvas id="matrix-bg"></canvas>
-
+<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">UBI<span>SEC</span></a>
+  <a href="#" class="nav-logo">UBI<span>.SEC</span></a>
   <ul class="nav-links">
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#about-wrap">About</a></li>
-    <li><a href="#skills-wrap">Skills</a></li>
-    <li><a href="#certs-wrap">Certs</a></li>
-    <li><a href="#projects-wrap">Projects</a></li>
-    <li><a href="#writeups-wrap">Writeups</a></li>
-    <li><a href="#blog-wrap">Blog</a></li>
-    <li><a href="https://github.com/ubi-sec" target="_blank">GitHub</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#writeups">Writeups</a></li>
+    <li><a href="#blog">Blog</a></li>
   </ul>
-  <div class="nav-status">
-    <div class="status-dot"></div>
-    eJPT TRACK // RED TEAM
+  <div class="nav-right">
+    <a href="https://github.com/ubi-sec" target="_blank" class="btn btn-outline">GitHub</a>
+    <a href="https://www.linkedin.com/in/abaid-ullah-1229492ba" target="_blank" class="btn btn-primary">LinkedIn</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-tag">// INITIALIZING PROFILE...</div>
-  <h1 class="hero-title">
-    <span class="glitch accent" data-text="ABAIDULLAH">ABAIDULLAH</span><br>
-    <span style="color:#fff; font-size:0.40em; letter-spacing:4px;">UBI.SEC <span style="color:var(--cyan)">// RED TEAM</span></span><br>
-    <span style="color:#fff; font-size:0.28em; letter-spacing:3px;">ADVANCED RED TEAM STUDENT & OFFENSIVE SECURITY PRACTITIONER</span>
-  </h1>
-  <div class="hero-sub">
-    <span style="color:var(--text)">abaidullah@kali:~$</span>
-    <span style="color:var(--cyan)">./</span><span class="typed-text"></span><span class="typed-cursor"></span>
+  <div class="hero-left">
+    <div class="hero-tag">// RED_TEAM_STUDENT • FAISALABAD_PK</div>
+    <h1 class="hero-title">
+      ABAIDULLAH<br>
+      <span class="red">UBI.SEC</span>
+    </h1>
+    <p class="hero-sub">
+      Advanced Red Team Student. Started with SETOOLKIT in 2024. Now focused on web app security, Active Directory, and building Python offensive tools. Targeting eJPT.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">View Projects →</a>
+      <a href="https://github.com/ubi-sec" target="_blank" class="btn btn-outline">GitHub</a>
+    </div>
   </div>
-  <p class="hero-desc">
-    Started in 2024 with Social-Engineer Toolkit. Now focused on web application security, Active Directory, and building Python-based offensive tools. Competing in CTFs & hackathons while targeting eJPT.
-  </p>
-  <div class="hero-btns">
-    <a href="#projects-wrap" class="btn btn-primary">View Projects</a>
-    <a href="https://github.com/ubi-sec" target="_blank" class="btn btn-secondary">GitHub →</a>
-    <a href="https://www.linkedin.com/in/abaid-ullah-1229492ba" target="_blank" class="btn btn-secondary">LinkedIn →</a>
-  </div>
-  <div class="hero-terminal">
-    <div class="t-line">$ whoami</div>
-    <div class="t-line" style="color:var(--red-main)">abaidullah — red team student</div>
-    <div class="t-line">$ cat /etc/hostname</div>
-    <div class="t-line" style="color:var(--red-main)">kali [faisalabad-pk]</div>
+  <div class="hero-right">
+    <div class="terminal-box">
+      <div class="term-header">
+        <span>ID://UBI-SEC</span>
+        <span class="term-live">LIVE</span>
+      </div>
+      <div class="term-line">$ <span class="cmd">whoami</span></div>
+      <div class="term-line">  abaidullah — red team student</div>
+      <div class="term-line">$ <span class="cmd">cat /etc/hostname</span></div>
+      <div class="term-line">  kali [faisalabad-pk]</div>
+      <div class="term-line">$ <span class="cmd">status</span></div>
+      <div class="term-line">  eJPT track <span class="ok">active</span></div>
+      <div class="term-line">$ <span class="cmd">_</span></div>
+    </div>
   </div>
 </section>
 
-<div id="about-wrap">
-  <div class="section-header reveal">
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-header">
     <span class="section-num">01</span>
-    <h2 class="section-title">ABOUT</h2>
+    <h2 class="section-title">About</h2>
     <div class="section-line"></div>
   </div>
-  <div id="about">
-    <div class="about-text reveal">
+  <div class="about-grid">
+    <div class="about-text">
       <p>My journey began in <strong>2024</strong> when I first launched <strong>SETOOLKIT</strong>. That single tool sparked a deep interest in offensive security.</p>
       <p>Today I focus on <strong>web application penetration testing</strong>, red teaming techniques, Active Directory, and building practical Python tools. I believe in learning by doing — labs, CTFs, and authorized testing.</p>
       <p>I have competed in local hackathons (Top 30 Faisalabad • Rank 16 Lahore Advance Hackathon) and continuously train on TryHackMe, HackTheBox, PicoCTF and Juice Shop.</p>
       <blockquote>Target: eJPT within the next 12 months. Building real skills, not just certificates.</blockquote>
     </div>
-    <div class="stat-grid reveal reveal-delay-1">
+    <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-num">2024</div>
         <div class="stat-label">STARTED JOURNEY</div>
@@ -939,122 +660,107 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div id="skills-wrap">
-  <div class="section-header reveal">
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="section-header">
     <span class="section-num">02</span>
-    <h2 class="section-title">SKILLS</h2>
+    <h2 class="section-title">Skills</h2>
     <div class="section-line"></div>
   </div>
   <div class="skills-grid">
-    <div class="skill-category reveal reveal-delay-1">
-      <div class="skill-cat-title">// Languages</div>
-      <div class="skill-item"><span>Python</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div></div>
-      <div class="skill-item"><span>Bash</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="65"></div></div></div>
-      <div class="skill-item"><span>SQL</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="55"></div></div></div>
+    <div class="skill-box">
+      <h3>// Languages</h3>
+      <div class="skill-item">Python</div>
+      <div class="skill-item">Bash</div>
+      <div class="skill-item">SQL</div>
     </div>
-    <div class="skill-category reveal reveal-delay-2">
-      <div class="skill-cat-title">// Offensive Tools</div>
-      <div class="skill-item"><span>Burp Suite</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="75"></div></div></div>
-      <div class="skill-item"><span>Nmap</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div></div>
-      <div class="skill-item"><span>Metasploit</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="60"></div></div></div>
-      <div class="skill-item"><span>BloodHound</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="55"></div></div></div>
-      <div class="skill-item"><span>Wireshark</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="60"></div></div></div>
-      <div class="skill-item"><span>Docker</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="50"></div></div></div>
+    <div class="skill-box">
+      <h3>// Offensive Tools</h3>
+      <div class="skill-item">Burp Suite</div>
+      <div class="skill-item">Nmap</div>
+      <div class="skill-item">Metasploit</div>
+      <div class="skill-item">BloodHound</div>
+      <div class="skill-item">Wireshark</div>
+      <div class="skill-item">Docker</div>
     </div>
-    <div class="skill-category reveal reveal-delay-3">
-      <div class="skill-cat-title">// Domains</div>
-      <div class="skill-item"><span>Web App Security</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div></div>
-      <div class="skill-item"><span>Red Teaming</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="65"></div></div></div>
-      <div class="skill-item"><span>Privilege Escalation</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="60"></div></div></div>
-      <div class="skill-item"><span>Automation</span><div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div></div>
+    <div class="skill-box">
+      <h3>// Domains</h3>
+      <div class="skill-item">Web App Security</div>
+      <div class="skill-item">Red Teaming</div>
+      <div class="skill-item">Privilege Escalation</div>
+      <div class="skill-item">Automation</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ===== CERTIFICATIONS SECTION ===== -->
-<div id="certs-wrap">
-  <div class="section-header reveal">
+<!-- CERTS -->
+<section id="certs" class="section">
+  <div class="section-header">
     <span class="section-num">03</span>
-    <h2 class="section-title">CERTIFICATIONS</h2>
+    <h2 class="section-title">Certifications</h2>
     <div class="section-line"></div>
   </div>
   <div class="certs-grid">
-    <div class="cert-card reveal reveal-delay-1">
-      <div>
-        <span class="cert-status completed">COMPLETED</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge done">COMPLETED</span>
       <div class="cert-info">
         <h3>Google Cybersecurity Professional Certificate</h3>
         <p>Security fundamentals, networks, Linux, SQL and incident detection.</p>
         <div class="cert-issuer">Google</div>
       </div>
     </div>
-    <div class="cert-card reveal reveal-delay-1">
-      <div>
-        <span class="cert-status completed">COMPLETED</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge done">COMPLETED</span>
       <div class="cert-info">
         <h3>Cisco Introduction to Cyber Security</h3>
         <p>Foundational course on cybersecurity concepts and common threats.</p>
         <div class="cert-issuer">Cisco</div>
       </div>
     </div>
-    <div class="cert-card reveal reveal-delay-2">
-      <div>
-        <span class="cert-status completed">COMPLETED</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge done">COMPLETED</span>
       <div class="cert-info">
         <h3>Cisco Ethical Hacker</h3>
         <p>Introduces ethical hacking methodology and penetration-testing concepts.</p>
         <div class="cert-issuer">Cisco</div>
       </div>
     </div>
-    <div class="cert-card reveal reveal-delay-2">
-      <div>
-        <span class="cert-status completed">COMPLETED</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge done">COMPLETED</span>
       <div class="cert-info">
         <h3>Cisco Help Desk Technician</h3>
-        <p>IT support fundamentals, troubleshooting and customer-facing technical skills.</p>
+        <p>IT support fundamentals, troubleshooting and customer-facing skills.</p>
         <div class="cert-issuer">Cisco</div>
       </div>
     </div>
-    <div class="cert-card reveal reveal-delay-3">
-      <div>
-        <span class="cert-status completed">COMPLETED</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge done">COMPLETED</span>
       <div class="cert-info">
         <h3>IBM Ethical Hacking with Open Source Tools</h3>
         <p>Professional Certificate — 6 courses completed on open-source offensive tools.</p>
         <div class="cert-issuer">IBM</div>
       </div>
     </div>
-    <div class="cert-card reveal reveal-delay-3">
-      <div>
-        <span class="cert-status progress">IN PROGRESS</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge prog">IN PROGRESS</span>
       <div class="cert-info">
         <h3>Python Essentials 1</h3>
         <p>Python programming fundamentals — syntax, data types and control flow.</p>
         <div class="cert-issuer">Python Institute</div>
       </div>
     </div>
-    <div class="cert-card reveal reveal-delay-3">
-      <div>
-        <span class="cert-status progress">IN PROGRESS</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge prog">IN PROGRESS</span>
       <div class="cert-info">
         <h3>Hack The Box Academy</h3>
         <p>Structured offensive-security courses and hands-on labs.</p>
         <div class="cert-issuer">Hack The Box</div>
       </div>
     </div>
-    <div class="cert-card reveal reveal-delay-3">
-      <div>
-        <span class="cert-status progress">IN PROGRESS</span>
-      </div>
+    <div class="cert-card">
+      <span class="cert-badge prog">IN PROGRESS</span>
       <div class="cert-info">
         <h3>Hack The Box — SOC Level 1</h3>
         <p>Currently studying defensive + offensive security concepts.</p>
@@ -1062,323 +768,106 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div id="projects-wrap">
-  <div class="section-header reveal">
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="section-header">
     <span class="section-num">04</span>
-    <h2 class="section-title">PROJECTS</h2>
+    <h2 class="section-title">Projects</h2>
     <div class="section-line"></div>
   </div>
-  <div class="projects-grid">
-    <a href="https://github.com/ubi-sec" target="_blank" class="project-card reveal reveal-delay-1">
-      <div class="project-tag">Python // Offensive</div>
-      <div class="project-name">UBI.SEC VULNERABILITY SCANNER</div>
-      <p class="project-desc">A modular Python-based web vulnerability scanner built for authorized testing. Designed to detect common web flaws with clean reporting and extensible architecture. Core project of the UBI.SEC ecosystem.</p>
-      <div class="project-footer">
-        <span class="project-link">github.com/ubi-sec</span>
-        <div class="project-arrow">→</div>
+  <div class="cards-grid">
+    <a href="https://github.com/ubi-sec" target="_blank" class="tool-card">
+      <div class="tool-tag">#01 • PYTHON // OFFENSIVE</div>
+      <div class="tool-name">UBI.SEC Vulnerability Scanner</div>
+      <p class="tool-desc">Modular Python-based web vulnerability scanner built for authorized testing. Detects common web flaws with clean reporting and extensible architecture.</p>
+      <div class="tool-footer">
+        <span class="tool-link">LAUNCH →</span>
+        <span class="tool-path">github.com/ubi-sec</span>
       </div>
     </a>
-    <a href="https://github.com/ubi-sec" target="_blank" class="project-card reveal reveal-delay-2">
-      <div class="project-tag">Labs // Practice</div>
-      <div class="project-name">CTF & LAB WRITEUPS</div>
-      <p class="project-desc">Documented solutions and methodologies from TryHackMe, HackTheBox, PicoCTF and Juice Shop. Focus on web exploitation, privilege escalation and real-world attack paths.</p>
-      <div class="project-footer">
-        <span class="project-link">github.com/ubi-sec</span>
-        <div class="project-arrow">→</div>
+    <a href="https://github.com/ubi-sec" target="_blank" class="tool-card">
+      <div class="tool-tag">#02 • LABS // PRACTICE</div>
+      <div class="tool-name">CTF & Lab Writeups</div>
+      <p class="tool-desc">Documented solutions from TryHackMe, HackTheBox, PicoCTF and Juice Shop. Focus on web exploitation, privilege escalation and attack paths.</p>
+      <div class="tool-footer">
+        <span class="tool-link">VIEW →</span>
+        <span class="tool-path">github.com/ubi-sec</span>
       </div>
     </a>
   </div>
-</div>
+</section>
 
-<!-- CTF WRITEUPS -->
-<div id="writeups-wrap">
-  <div class="section-header reveal">
+<!-- WRITEUPS -->
+<section id="writeups" class="section">
+  <div class="section-header">
     <span class="section-num">05</span>
-    <h2 class="section-title">CTF WRITEUPS</h2>
+    <h2 class="section-title">CTF Writeups</h2>
     <div class="section-line"></div>
   </div>
-  <div class="writeups-list">
-    <a href="https://github.com/ubi-sec" target="_blank" class="writeup-item reveal reveal-delay-1">
+  <div class="writeup-list">
+    <a href="https://github.com/ubi-sec" target="_blank" class="writeup-item">
       <span class="writeup-platform">TryHackMe</span>
       <span class="writeup-title">Web Vulnerability Analysis — Web Security</span>
       <span class="writeup-cat">WEB</span>
       <span class="writeup-date">OCT 2026</span>
     </a>
-    <a href="https://github.com/ubi-sec" target="_blank" class="writeup-item reveal reveal-delay-2">
+    <a href="https://github.com/ubi-sec" target="_blank" class="writeup-item">
       <span class="writeup-platform">PicoCTF</span>
       <span class="writeup-title">SQL Injection Bypass — Database Security</span>
       <span class="writeup-cat">SQL</span>
       <span class="writeup-date">SEP 2026</span>
     </a>
-    <a href="https://github.com/ubi-sec" target="_blank" class="writeup-item reveal reveal-delay-3">
+    <a href="https://github.com/ubi-sec" target="_blank" class="writeup-item">
       <span class="writeup-platform">HackTheBox</span>
       <span class="writeup-title">Privilege Escalation — Linux / Windows</span>
       <span class="writeup-cat">PRIVESC</span>
       <span class="writeup-date">AUG 2026</span>
     </a>
   </div>
-</div>
+</section>
 
 <!-- BLOG -->
-<div id="blog-wrap">
-  <div class="section-header reveal">
+<section id="blog" class="section">
+  <div class="section-header">
     <span class="section-num">06</span>
-    <h2 class="section-title">BLOG</h2>
+    <h2 class="section-title">Blog</h2>
     <div class="section-line"></div>
   </div>
   <div class="blog-grid">
-    <a href="#" class="blog-card reveal reveal-delay-1">
+    <a href="#" class="blog-card">
       <div class="blog-date">OCT 2026</div>
       <div class="blog-title">From SETOOLKIT to Red Team Mindset</div>
-      <p class="blog-excerpt">How launching Social-Engineer Toolkit in 2024 changed the way I approach offensive security and started my real journey.</p>
+      <p class="blog-excerpt">How launching Social-Engineer Toolkit in 2024 changed the way I approach offensive security.</p>
       <span class="blog-read">READ MORE →</span>
     </a>
-    <a href="#" class="blog-card reveal reveal-delay-2">
+    <a href="#" class="blog-card">
       <div class="blog-date">SEP 2026</div>
-      <div class="blog-title">Building a Modular Web Vulnerability Scanner in Python</div>
-      <p class="blog-excerpt">Design decisions, architecture and lessons learned while developing the UBI.SEC scanner for authorized testing.</p>
+      <div class="blog-title">Building a Modular Web Vulnerability Scanner</div>
+      <p class="blog-excerpt">Design decisions and lessons learned while developing the UBI.SEC scanner.</p>
       <span class="blog-read">READ MORE →</span>
     </a>
-    <a href="#" class="blog-card reveal reveal-delay-3">
+    <a href="#" class="blog-card">
       <div class="blog-date">AUG 2026</div>
-      <div class="blog-title">Lessons from Local Hackathons (Faisalabad & Lahore)</div>
-      <p class="blog-excerpt">What competing under pressure taught me about methodology, time management and staying calm during live challenges.</p>
+      <div class="blog-title">Lessons from Local Hackathons</div>
+      <p class="blog-excerpt">What competing in Faisalabad & Lahore taught me about methodology under pressure.</p>
       <span class="blog-read">READ MORE →</span>
     </a>
   </div>
-</div>
+</section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">UBI.SEC</div>
-  <div class="footer-desc">// ABAIDULLAH • ADVANCED RED TEAM STUDENT • FAISALABAD, PAKISTAN</div>
+  <div class="footer-logo">UBI<span>.SEC</span></div>
+  <div class="footer-desc">Abaidullah • Advanced Red Team Student • Faisalabad, Pakistan</div>
   <div class="footer-social">
-    <a href="https://github.com/ubi-sec" target="_blank" class="social-pill">⌥ GitHub</a>
-    <a href="https://www.linkedin.com/in/abaid-ullah-1229492ba" target="_blank" class="social-pill">in LinkedIn</a>
-    <a href="mailto:your-email@example.com" class="social-pill">✉ Email</a>
+    <a href="https://github.com/ubi-sec" target="_blank" class="social-pill">GitHub</a>
+    <a href="https://www.linkedin.com/in/abaid-ullah-1229492ba" target="_blank" class="social-pill">LinkedIn</a>
+    <a href="mailto:your-email@example.com" class="social-pill">Email</a>
   </div>
   <div class="footer-copy">© 2026 ABAIDULLAH • AUTHORIZED SECURITY RESEARCH ONLY • eJPT TRACK</div>
 </footer>
 
-<button id="float-term-btn" onclick="toggleTerm()">
-  <span class="ft-tooltip">OPEN TERMINAL</span>
-  &gt;_
-</button>
-
-<div id="float-terminal">
-  <div class="ft-titlebar">
-    <div class="ft-dot r"></div><div class="ft-dot y"></div><div class="ft-dot g"></div>
-    <span class="ft-title">abaidullah@kali — bash</span>
-    <button class="ft-close" onclick="toggleTerm()">✕</button>
-  </div>
-  <div id="ft-body">
-    <div class="t-output green">UBI.SEC Interactive Terminal v2.0</div>
-    <div class="t-output dim">Type 'help' for available commands.</div>
-    <div class="t-output dim">──────────────────────────────────</div>
-    <br>
-    <div class="t-prompt-line">
-      <span class="t-prompt">abaidullah@kali:~$</span>
-      <input class="t-input" id="term-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command...">
-    </div>
-  </div>
-</div>
-
-<script>
-  // BOOT SCREEN
-  const bootLines = ['b0','b1','b2','b3','b4','b5','b6','b7','b8','b9'];
-  const bootFill = document.getElementById('boot-fill');
-  const bootPct = document.getElementById('boot-pct');
-  const bootScreen = document.getElementById('boot-screen');
-  function runBoot() {
-    let i = 0;
-    function showNext() {
-      if (i >= bootLines.length) {
-        setTimeout(() => {
-          bootFill.style.width = '100%';
-          let p = 0;
-          const pi = setInterval(() => {
-            p = Math.min(p + 4, 100);
-            bootPct.textContent = p + '%';
-            if (p >= 100) {
-              clearInterval(pi);
-              setTimeout(() => {
-                bootScreen.classList.add('hide');
-                setTimeout(() => { bootScreen.style.display = 'none'; }, 700);
-              }, 400);
-            }
-          }, 20);
-        }, 200);
-        return;
-      }
-      const el = document.getElementById(bootLines[i]);
-      if (el) el.classList.add('show');
-      i++;
-      setTimeout(showNext, i < 3 ? 120 : 180);
-    }
-    showNext();
-  }
-  window.addEventListener('load', () => setTimeout(runBoot, 200));
-
-  // CUSTOM CURSOR
-  const cursor = document.getElementById('cursor');
-  const trail = document.getElementById('cursor-trail');
-  let mx = -100, my = -100, tx = -100, ty = -100;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-  });
-  setInterval(() => {
-    tx += (mx - tx) * 0.15;
-    ty += (my - ty) * 0.15;
-    trail.style.left = tx + 'px';
-    trail.style.top = ty + 'px';
-  }, 16);
-
-  // SCROLL PROGRESS
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-    document.getElementById('scroll-line').style.width = (scrolled * 100) + '%';
-  });
-
-  // SCROLL REVEAL
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(el => {
-      if (el.isIntersecting) {
-        el.target.classList.add('visible');
-        el.target.querySelectorAll('.skill-bar').forEach(bar => {
-          bar.style.width = bar.dataset.width + '%';
-        });
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  document.querySelectorAll('.skill-category').forEach(el => observer.observe(el));
-
-  // MATRIX RAIN
-  const canvas = document.getElementById('matrix-bg');
-  const ctx = canvas.getContext('2d');
-  const fontSize = 13;
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&<>{}[]';
-  let cols, drops;
-  function initMatrix() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    cols = Math.floor(canvas.width / fontSize);
-    drops = Array(cols).fill(1);
-  }
-  initMatrix();
-  window.addEventListener('resize', initMatrix);
-  function drawMatrix() {
-    ctx.fillStyle = 'rgba(5,0,0,0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ff003c';
-    ctx.font = fontSize + 'px Share Tech Mono, monospace';
-    for (let i = 0; i < drops.length; i++) {
-      const char = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
-    }
-  }
-  setInterval(drawMatrix, 55);
-
-  // TYPING ANIMATION
-  const roles = ['scanner.py', 'recon.sh', 'privesc.py', 'ad_enum.py', 'ubi_sec.sh', 'bloodhound.py'];
-  let rIdx = 0, cIdx = 0, deleting = false;
-  const typedEl = document.querySelector('.typed-text');
-  function typeLoop() {
-    if (!typedEl) return;
-    const word = roles[rIdx];
-    if (!deleting) {
-      typedEl.textContent = word.slice(0, ++cIdx);
-      if (cIdx === word.length) { deleting = true; setTimeout(typeLoop, 1800); return; }
-    } else {
-      typedEl.textContent = word.slice(0, --cIdx);
-      if (cIdx === 0) { deleting = false; rIdx = (rIdx + 1) % roles.length; setTimeout(typeLoop, 400); return; }
-    }
-    setTimeout(typeLoop, deleting ? 60 : 100);
-  }
-  setTimeout(typeLoop, 4000);
-
-  // FLOATING TERMINAL
-  let termOpen = false;
-  function toggleTerm() {
-    termOpen = !termOpen;
-    document.getElementById('float-terminal').classList.toggle('open', termOpen);
-    if (termOpen) setTimeout(() => document.getElementById('term-input').focus(), 300);
-  }
-  const ftBody = document.getElementById('ft-body');
-  const termInput = document.getElementById('term-input');
-  const commands = {
-    help: () => [
-      {t:'green', v:'Available commands:'},
-      {t:'cyan',  v:'  whoami      — identity & goals'},
-      {t:'cyan',  v:'  skills      — technical stack'},
-      {t:'cyan',  v:'  certs       — certifications'},
-      {t:'cyan',  v:'  projects    — current work'},
-      {t:'cyan',  v:'  clear       — wipe terminal'},
-    ],
-    whoami: () => [
-      {t:'green', v:'Abaidullah (UBI.SEC)'},
-      {t:'',      v:'Role:   Advanced Red Team Student'},
-      {t:'',      v:'Focus:  Web Sec • AD • Tooling'},
-      {t:'',      v:'Target: eJPT (12 months)'},
-      {t:'',      v:'Loc:    Faisalabad, Pakistan'},
-    ],
-    skills: () => [
-      {t:'green', v:'[OFFENSIVE STACK]'},
-      {t:'',      v:'  Python • Bash • SQL'},
-      {t:'',      v:'  Burp • Nmap • Metasploit'},
-      {t:'',      v:'  BloodHound • Wireshark • Docker'},
-    ],
-    certs: () => [
-      {t:'green', v:'[COMPLETED]'},
-      {t:'',      v:'  Google Cybersecurity Professional'},
-      {t:'',      v:'  Cisco Intro to Cyber Security'},
-      {t:'',      v:'  Cisco Ethical Hacker'},
-      {t:'',      v:'  IBM Ethical Hacking (6 courses)'},
-      {t:'cyan',  v:'[IN PROGRESS]'},
-      {t:'',      v:'  Python Essentials 1'},
-      {t:'',      v:'  HTB Academy + SOC Level 1'},
-    ],
-    projects: () => [
-      {t:'green', v:'[01] UBI.SEC Vulnerability Scanner'},
-      {t:'',      v:'     Modular Python web scanner'},
-      {t:'cyan',  v:'     → github.com/ubi-sec'},
-    ],
-    clear: () => '__clear__',
-  };
-  function printLines(lines) {
-    if (lines === '__clear__') {
-      const pl = ftBody.querySelector('.t-prompt-line');
-      ftBody.innerHTML = '';
-      ftBody.appendChild(pl);
-      return;
-    }
-    const pl = ftBody.querySelector('.t-prompt-line');
-    lines.forEach(({t, v}) => {
-      const d = document.createElement('div');
-      d.className = 't-output' + (t ? ' ' + t : '');
-      d.textContent = v;
-      ftBody.insertBefore(d, pl);
-    });
-    ftBody.scrollTop = ftBody.scrollHeight;
-  }
-  termInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      const cmd = termInput.value.trim().toLowerCase();
-      termInput.value = '';
-      if (!cmd) return;
-      const echo = document.createElement('div');
-      echo.className = 't-output';
-      echo.innerHTML = `<span style="color:var(--red-main)">abaidullah@kali:~$ </span>${cmd}`;
-      ftBody.insertBefore(echo, ftBody.querySelector('.t-prompt-line'));
-      if (commands[cmd]) printLines(commands[cmd]());
-      else printLines([{t:'red', v:`command not found: ${cmd} — try 'help'`}]);
-    }
-  });
-</script>
 </body>
 </html>
