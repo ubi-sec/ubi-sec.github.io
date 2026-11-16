@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- All portfolio content lives in `src/data/portfolio.ts`; components only read from it, so content edits never touch layout code.
+- Heavy visuals (three.js globe, digital rain, GSAP) load inside `useEffect` via dynamic import and respect the global FX switch in `src/components/portfolio/fx.tsx`, so SSR never touches WebGL and users can pause motion.
+- Overlays (mobile menu) render through a portal to `document.body`, because the sticky header's backdrop-filter traps `position: fixed` children.
