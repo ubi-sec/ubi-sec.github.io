@@ -99,9 +99,9 @@ export function Footer() {
   return (
     <footer className="relative mt-8 border-t border-primary/40 bg-background/80 backdrop-blur">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent shadow-glow" />
-      <div className="flex flex-col items-center gap-3 px-6 py-5 text-sm text-muted-foreground lg:flex-row lg:justify-between">
+      <div className="flex flex-col items-center gap-3 px-6 py-5 text-center text-sm text-muted-foreground lg:flex-row lg:justify-between lg:pr-24">
         <p>{profile.name} <span className="mx-2 text-primary/50">|</span> Cybersecurity Portfolio <span className="mx-2 text-primary/50">|</span> {profile.brand}</p>
-        <p className="font-mono tracking-[0.4em] text-primary">// EXPLORE / LEARN / HACK / SECURE</p>
+        <p className="font-mono tracking-[0.25em] text-primary sm:tracking-[0.4em]">// EXPLORE / LEARN / HACK / SECURE</p>
         <p>Made with <span className="text-danger">♥</span> for Cybersecurity</p>
       </div>
       <p className="pb-5 text-center font-mono text-[11px] tracking-widest text-muted-foreground/70">© 2026 ABAIDULLAH • AUTHORIZED SECURITY RESEARCH ONLY • eJPT TRACK</p>

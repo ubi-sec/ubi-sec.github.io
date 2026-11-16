@@ -149,7 +149,7 @@ function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
     io.observe(el);
     return () => io.disconnect();
   }, [value]);
-  return <span ref={ref} className="font-semibold text-primary">{n}{suffix}</span>;
+  return <span ref={ref} className="whitespace-nowrap font-semibold text-primary">{n}{suffix}</span>;
 }
 
 function CtfCard() {
@@ -165,7 +165,7 @@ function CtfCard() {
         </div>
         <ul className="space-y-1.5 text-[13px] text-foreground/90">
           {ctfStats.map((s) => (
-            <li key={s.label} className="flex items-center gap-2">
+            <li key={s.label} className="flex items-center gap-2 whitespace-nowrap">
               <ShieldCheck className="size-3.5 text-primary" aria-hidden />
               <Counter value={s.value} suffix={"suffix" in s ? s.suffix : ""} /> {s.label}
             </li>
