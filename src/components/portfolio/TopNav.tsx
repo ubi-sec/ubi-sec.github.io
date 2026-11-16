@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Home, User, Wrench, Award, FolderGit2, Flag, Briefcase, Mail, Menu, X, Zap, ZapOff } from "lucide-react";
 import { navItems, profile } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
@@ -100,7 +101,7 @@ export function TopNav() {
         </div>
       </div>
 
-      {open && (
+      {open && createPortal(
         <div id="mobile-menu" className="fixed inset-0 z-50 xl:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <button type="button" className="absolute inset-0 bg-background/80 backdrop-blur" aria-label="Close menu" onClick={() => setOpen(false)} />
           <div className="absolute inset-y-0 right-0 flex w-[82%] max-w-xs flex-col overflow-y-auto border-l border-primary/40 bg-sidebar p-5 animate-in slide-in-from-right">
@@ -135,7 +136,8 @@ export function TopNav() {
               ))}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </header>
   );
