@@ -56,7 +56,7 @@ stats: [                                    // ← یہاں "stats:" لگایا 
     { value: "2024", label: "Started journey" },
     { value: "Top 16", label: "Lahore hackathon" },
     { value: "eJPT", label: "12-month target" },
-    { value: "5", label: "Certs completed" },
+    { value: "15", label: "Certs completed" },
 ],
 
 traits: [
@@ -96,12 +96,12 @@ export type Cert = { title: string; short: string; issuer: Issuer; issuerName: s
 export const certifications: Cert[] = [
   { title: "Google Cybersecurity Professional Certificate", short: "Google Cybersecurity Professional", issuer: "google", issuerName: "Google", status: "Completed", text: "Security fundamentals, networks, Linux, SQL and incident detection." },
   { title: "Cisco Ethical Hacker", short: "Ethical Hacker", issuer: "cisco", issuerName: "Cisco", status: "Completed", text: "Introduces ethical hacking methodology and penetration-testing concepts." },
-  { title: "IBM Ethical Hacking with Open Source Tools", short: "Ethical Hacking", issuer: "ibm", issuerName: "IBM", status: "In progress", text: "Professional Certificate — studying open-source offensive-security tools and techniques." },
+  { title: "IBM Ethical Hacking with Open Source Tools", short: "Ethical Hacking", issuer: "ibm", issuerName: "IBM", status: "Completed", text: "Professional Certificate — studying open-source offensive-security tools and techniques." },
   { title: "Cisco Introduction to Cyber Security", short: "Intro to Cybersecurity", issuer: "cisco", issuerName: "Cisco", status: "Completed", text: "Foundational course on cybersecurity concepts and common threats." },
   { title: "Cisco Help Desk Technician", short: "Help Desk Tech", issuer: "cisco", issuerName: "Cisco", status: "Completed", text: "IT support fundamentals, troubleshooting and customer-facing technical skills." },
   { title: "Python Essentials 1", short: "Essentials 1", issuer: "python", issuerName: "Python Institute", status: "Completed", text: "Python programming fundamentals — syntax, data types and control flow." },
   { title: "Hack The Box Academy", short: "HTB Academy", issuer: "htb", issuerName: "Hack The Box", status: "In progress", text: "Structured offensive-security courses and hands-on labs — 6 courses completed." },
-  { title: "Hack The Box — SOC Level 1", short: "SOC Level 1", issuer: "htb", issuerName: "Hack The Box", status: "In progress", text: "Currently studying this SOC-focused learning path." },
+  
 ];
 
 export type Project = { id: string; title: string; tag: string; text: string; url: string; image?: "scanner" };
