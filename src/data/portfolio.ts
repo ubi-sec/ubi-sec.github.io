@@ -134,7 +134,7 @@ export const ctfStats = [
   { value: 6, label: "HTB Courses" },
   { value: 16, label: "Exercises" },
   { value: 5, label: "Certificates" },
-  { value: 1, label: "In Progress" },
+  { value: 1, label: "In Progress" }, 
   { value: 7, label: "Hands-on Labs" },
   { value: 4, suffix: " mo", label: "Home Lab Practice" },
 ];
